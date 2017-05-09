@@ -1,3 +1,58 @@
+
 page-add-task-modal {
+
+    ion-list{
+        height: 100%;
+    }
+
+    /**   utilizamos flex box
+
+    <ion-content>
+      <ion-list no-lines>
+        <form class="container" ...
+    */
+    .container{
+
+        /**  me centra el contenido (no la pagina modal) */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        padding: 50px;
+
+        /** espacio entre elementos */
+        >*{
+            margin-bottom: 30px;
+        }
+
+        .submit-button{
+            width:100%;
+        }
+
+        ion-item{
+            &.item-md-danger, &.item-ios-danger, &.item-wp-danger{
+                background-color:transparent;
+                color: color($colors, danger);
+                margin-top: -40px;
+                margin-bottom: -5px;
+
+                /** Estilos material design */
+                transition-property: opacity, visibility;
+                transition-duration: 0.3s;
+
+                /** En sass para tributos hidden (vista) dentro de   ion-item   */
+                &[hidden]{
+                    display: block !important;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition-property: opacity, visibility;
+                    transition-duration: 0.3s;
+                    transition-delay: 0.3s;
+                }
+            }
+        }
+    }
 
 }

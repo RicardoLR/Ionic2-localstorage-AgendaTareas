@@ -1,18 +1,72 @@
 <!--
-  Generated template for the AddTaskModal page.
+  Generamos esta vista
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  > ionic g page add-task-modal
+
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>add-task-modal</ion-title>
-  </ion-navbar>
+<!-- sustituimos ion-nav-bar   por un   ion-toolbar
+
+tiene boton para cerrar sino quiero continuar
+atributo (click)
+con metodo enlazado a controlador  metodo  "dismiss()-->
+ <ion-toolbar color="primary">
+   <ion-title>{{title}}</ion-title>
+   <ion-buttons start>
+     <button ion-button (click)="dismiss()">
+
+       <!-- Para IOS   y despues para  android, Phone
+       con ayuda de atributo  showWhen -->
+       <span color="secondary" showWhen="ios">Cancel</span>
+       <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+     </button>
+   </ion-buttons>
+ </ion-toolbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+  <!-- =============================================================
+  OJO  submit()   no envia model  explicitamente
+
+  Pero lo recibe como un binding
+
+  Vista:   [(ngModel)]="model.description"
+  controller: this.viewCtrl.dismiss(this.model);
+  ============================================================= -->
+  <ion-list no-lines>
+    <form class="container" (ngSubmit)="submit()">
+
+      <!-- =============================================================
+      Enlazamos "descriptionState" en este input ->   #descriptionState="ngModel"
+    ============================================================= -->
+      <ion-item>
+        <ion-input placeholder="Task description" clearInput
+        [(ngModel)]="model.description"
+        #descriptionState="ngModel"
+        name="description" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item color="danger" [hidden]="descriptionState.valid || descriptionState.untouched">
+        Description is required
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Is important</ion-label>
+        <ion-checkbox color="dark" [(ngModel)]="model.isImportant" name="isImportant"></ion-checkbox>
+      </ion-item>
+
+      <div class="submit-button">
+        <button ion-button block type="submit"
+          [disabled]="!descriptionState.valid">{{buttonText}}
+        </button>
+      </div>
+
+    </form>
+  </ion-list>
 
 </ion-content>

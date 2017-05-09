@@ -29,6 +29,9 @@ agendaTareasApp/plugins/ios.json
 agendaTareasApp/www/
 agendaTareasApp/$RECYCLE.BIN/
 
+
+agendaTareasApp/src/share/app-settings.ts
+
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate

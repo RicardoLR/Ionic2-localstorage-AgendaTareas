@@ -1,3 +1,37 @@
 page-lists {
 
+    ion-list{
+        /**  estilos CSS flex para component ion-list */
+        display: flex;
+        flex-wrap: wrap;
+        /* distribuye los items */
+        justify-content: space-between;
+
+        ion-item{
+            /** 50% del view port */
+            width: calc(50vw - 24px) !important;
+            height: calc(50vw - 24px);
+
+            border: none !important;
+            box-shadow: 0 3px 6px rgba(0,0,0, 0.16), 0 3px 6px rgba(0,0,0,0.23) !important;
+            margin-bottom: 16px !important;
+
+            .item-inner{
+                border: none !important;
+            }
+
+            .input-wrapper{
+                text-align: center;
+            }
+
+            &.selected-list{
+                background-color: #DDD;
+                box-shadow: 0 3px 15px rgba(0,0,0,0.6) !important;
+                // Para no cambiar transicion de golpe
+                transition: background-color 0.3s ease-out;
+            }
+
+        }
+    }
+
 }

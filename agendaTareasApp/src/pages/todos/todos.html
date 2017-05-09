@@ -1,13 +1,12 @@
 <!--
   Generated template for the Todos page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
+  > ionic g page todos
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>todos</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>To Do List</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +14,49 @@
 
 <ion-content padding>
 
+  <h3>{{list.name}}</h3>
+
+  <ion-list>
+
+    <ion-item class="no-todos" *ngIf="!todoService.todos || todoService.todos.length == 0">
+      Add some tasks to your list
+    </ion-item>
+
+    <!-- Listas ionic sliding con las opciones cuando se despliegan  -->
+    <ion-item-sliding *ngFor="let todo of todoService.todos | prioritizedTodosPipe">
+
+      <ion-item [ngStyle]="setTodoStyles(todo)">
+        <ion-label>{{todo.description}}</ion-label>
+        <ion-checkbox color="dark" [checked]="todo.isDone" (click)="toogleTodo(todo)"> </ion-checkbox>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button color="dark" (click)="showEditTodo(todo)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="removeTodo(todo)">
+          <ion-icon name="remove-circle"></ion-icon>
+          Remove
+          </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+    <!-- Saldra si todas las tareas estas hecha (palomeadas) -->
+    <ion-item-divider *ngIf="(todoService.todos | doneTodosPipe).length > 0">Done tasks</ion-item-divider>
+
+    <ion-item *ngFor="let todo of todoService.todos | doneTodosPipe" [ngStyle]="setTodoStyles(todo)">
+        <ion-label color="light">{{todo.description}}</ion-label>
+        <ion-checkbox color="light" [checked]="todo.isDone" (click)="toogleTodo(todo)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
 </ion-content>
+
+<!-- ===================================================
+  Boton flotante  reconocer por ion-fab
+  con icono  dentro
+=================================================== -->
+<ion-fab bottom right>
+  <button ion-fab (click)="showAddTodo()"> <ion-icon name="add"></ion-icon> </button>
+</ion-fab>

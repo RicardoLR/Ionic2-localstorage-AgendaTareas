@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Todos } from './todos';
+import { TodosPage } from './todos';
 
 @NgModule({
   declarations: [
-    Todos,
+    TodosPage,
   ],
   imports: [
-    IonicPageModule.forChild(Todos),
+    IonicPageModule.forChild(TodosPage),
   ],
   exports: [
-    Todos
+    TodosPage
   ]
 })
 export class TodosModule {}
