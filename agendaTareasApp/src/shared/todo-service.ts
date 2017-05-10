@@ -160,7 +160,10 @@ export class TodoService {
           ...this.todos.slice(index+1)];
         this.saveLocally(todo.listId);
       },
-      error => console.log("An error occurred while trying to remove the todo ", todo)
+      (error) => {
+        console.log("An error occurred while trying to remove the todo ", todo);
+        
+      }
     );
   }
 

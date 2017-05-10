@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController, ViewController } from 'ionic-angular';
 
 
 import { ListsService } from '../../shared/lists-service';
@@ -9,9 +9,14 @@ import { ListModel } from '../../shared/list-model';
 import { TodosPage } from '../todos/todos';
 
 
+import { Network } from '@ionic-native/network';
+
+let navigator: any;
+let Connection: any;
+
+
 /*
   Generated class for the Lists page.
-
 
 */
 @Component({
@@ -24,9 +29,11 @@ export class ListsPage {
   public selectedList:ListModel = null;
 
   constructor(public navCtrl: NavController,
+    public viewCtrl: ViewController,
     public navParams: NavParams,
     public alertCtrl: AlertController,  // mensajes de alerta
     public listsService:ListsService,
+    public network:Network,
     private loadingCtrl:LoadingController) {}
 
   /** NOTAR:   no hay funcion a cargar inmediatamente en constructor
@@ -47,20 +54,39 @@ export class ListsPage {
   */
   goToList(list:ListModel){
     this.clearSelectedList();
+
     this.navCtrl.push(TodosPage, {list});
+
   }
 
   addNewList(name:string){
-    let loader = this.loadingCtrl.create();
+
+    let loader = this.loadingCtrl.create({dismissOnPageChange: false});
     loader.present();
+
 
     /** Servicio regresa un observable  */
     this.listsService.addList(name)
-      .subscribe(list =>{
-        this.goToList(list);
+      .subscribe( 
+        (list) => {
+        	console.log("lists.ts   addNewList()... ");
 
-        loader.dismiss(); // cargando...
-      }, error => loader.dismiss());
+          this.goToList(list);
+
+          loader.dismiss(); // cargando...
+
+        }, (error) => {
+          loader.dismiss();
+          
+          let alert = this.alertCtrl.create({
+            title: 'Problemas',
+            subTitle: 'Revice su conexión',
+            buttons: ['OK']
+          });
+          alert.present();
+
+        } 
+      );
 
   }
 
@@ -90,9 +116,18 @@ export class ListsPage {
 
             Llamo a dismiss() para controlar transicion entre alert (finalice) y (siga) loader */
             let navTransition = addListAlert.dismiss();
+
             navTransition.then( ()=>{
+              this.addNewList(data.name)  // mirar arriba  inputs.name: 'name'
+            });
+
+            /* tambien podriamos encademar 
+            let navTransition = addListAlert.dismiss().then( () => {
               this.addNewList(data.name)  // De mirar arriba  inputs.name: 'name'
             });
+            */
+            return false;
+
           }
         }
       ]
@@ -118,5 +153,6 @@ export class ListsPage {
     this.listsService.removeList(this.selectedList);
     this.selectedList = null;
   }
+
 
 }

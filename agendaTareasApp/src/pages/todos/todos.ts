@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Platform, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController, Platform, LoadingController } from 'ionic-angular';
 
-import {ListModel } from '../../shared/list-model';
+import { ListModel } from '../../shared/list-model';
 import { TodoModel } from '../../shared/todo-model';
 import { TodoService } from '../../shared/todo-service';
 
@@ -28,6 +28,8 @@ export class TodosPage {
     public navCtrl: NavController,  // por dafault, no lo utilizamos
     public navParams: NavParams,
     public modalCtrl: ModalController,
+
+    public alertCtrl: AlertController,  // mensajes de alerta
 
     public todoService: TodoService,
     public platform: Platform,
@@ -107,8 +109,17 @@ export class TodosPage {
 
     this.todoService.updateTodo(originalTodo, modifiedTodo)
     .subscribe(
-      ()=>loader.dismiss(),
-      () =>loader.dismiss()
+      () =>loader.dismiss(),
+      () => {
+        loader.dismiss();
+
+        let alert = this.alertCtrl.create({
+          title: 'Problemas',
+          subTitle: 'Revice su conexión',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
     );
   }
 

@@ -1,5 +1,7 @@
 page-lists {
 
+
+
     ion-list{
         /**  estilos CSS flex para component ion-list */
         display: flex;
@@ -7,14 +9,24 @@ page-lists {
         /* distribuye los items */
         justify-content: space-between;
 
+        background-color: color($colors, material1);
+
         ion-item{
+
+            
             /** 50% del view port */
-            width: calc(50vw - 24px) !important;
-            height: calc(50vw - 24px);
+            width: calc(48vw - 24px) !important;
+            height: calc(48vw - 24px);
+
+            /** https://material.io/guidelines/style/color.html  */
+	        background-color: color($colors, material2) !important;
+            border: 2px solid color($colors, material3) !important;
+            border-radius: 25px;
 
             border: none !important;
             box-shadow: 0 3px 6px rgba(0,0,0, 0.16), 0 3px 6px rgba(0,0,0,0.23) !important;
             margin-bottom: 16px !important;
+
 
             .item-inner{
                 border: none !important;
@@ -24,10 +36,11 @@ page-lists {
                 text-align: center;
             }
 
+            /** Estilo para eliminar lista, cuando se precione largo tiempo */
             &.selected-list{
                 background-color: #DDD;
                 box-shadow: 0 3px 15px rgba(0,0,0,0.6) !important;
-                // Para no cambiar transicion de golpe
+                /** Para no cambiar transicion de golpe */
                 transition: background-color 0.3s ease-out;
             }
 

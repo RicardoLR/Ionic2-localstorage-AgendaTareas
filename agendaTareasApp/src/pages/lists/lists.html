@@ -33,7 +33,7 @@
       (press)="selectList(list)"
       [ngClass]="{'selected-list': selectedList === list}">
 
-      {{list.name}}
+      <h1> {{list.name}} </h1>
     </ion-item>
   </ion-list>
 
@@ -42,7 +42,7 @@
 
 <ion-fab bottom right>
 
-  <button ion-fab (click)="showAddList()">
+  <button ion-fab color="material4" (click)="showAddList()">
     <ion-icon name="add"></ion-icon>
   </button>
 </ion-fab>
